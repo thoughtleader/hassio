@@ -1,5 +1,5 @@
 blueprint:
-  name: Remote - Send Command
+  name: Remote - Send Command (Conditional Devices)
   description: >-
     Sends a command to a device using a specified remote entity. 
     You can define the target remote, the device, the command, and how many times the command should be repeated.
@@ -14,9 +14,19 @@ blueprint:
     
     device_name:
       name: Device Name
-      description: The name of the device to control (e.g., Projector, Blinds). This must match the device name configured in your remote.
+      description: >-
+        Select the device to control. Please ensure the device corresponds to the remote you selected above.
+        - For 'remote.den_remote': Projector, Project Screen, Blinds
+        - For 'remote.office_remote': airpurifier, Theo Humidifier, Video Blinds
       selector:
-        text:
+        select:
+          options:
+            - "Projector"
+            - "Project Screen"
+            - "Blinds"
+            - "airpurifier"
+            - "Theo Humidifier"
+            - "Video Blinds"
 
     command_name:
       name: Command
