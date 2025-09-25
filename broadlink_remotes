@@ -1,0 +1,53 @@
+blueprint:
+  name: Remote - Send Command
+  description: >-
+    Sends a command to a device using a specified remote entity. 
+    You can define the target remote, the device, the command, and how many times the command should be repeated.
+  domain: automation
+  input:
+    target_remote:
+      name: Remote Entity
+      description: The remote entity that will send the command.
+      selector:
+        entity:
+          domain: remote
+    
+    device_name:
+      name: Device Name
+      description: The name of the device to control (e.g., Projector, Blinds). This must match the device name configured in your remote.
+      selector:
+        text:
+
+    command_name:
+      name: Command
+      description: >-
+        The command to send to the device.
+        Suggested commands: Power, Up, Down, Stop, Auto, SpeedUp, SpeedDown, Off.
+      selector:
+        text:
+
+    repeats:
+      name: Number of Repeats
+      description: The number of times to send the command.
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 10
+          mode: box
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  # This is left empty for the user to define when creating an automation from this blueprint.
+  # For example, a button press, a time of day, or a state change.
+
+action:
+  - service: remote.send_command
+    target:
+      entity_id: !input target_remote
+    data:
+      device: !input device_name
+      command: !input command_name
+      num_repeats: !input repeats
